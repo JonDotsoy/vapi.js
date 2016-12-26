@@ -1,7 +1,7 @@
 # ![vapi.js](https://goo.gl/DH4cJW)
 A virtual api for the browser.
 
-> ### Stop a second!
+> ### Await a second!
 > Okay, this is my problem. Are there API generators in the backend but in the frontend?
 >
 > I want an easy library like any very similar to express.js or loopback. But this does not exist. Or if? Well, this repository contains a project that tries to solve it.
