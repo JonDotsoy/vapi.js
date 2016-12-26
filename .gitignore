@@ -2,9 +2,10 @@
 # Created by https://www.gitignore.io/api/windows,linux,macos,node
 
 ### Windows ###
-# Windows image file caches
+# Windows thumbnail cache files
 Thumbs.db
 ehthumbs.db
+ehthumbs_vista.db
 
 # Folder config file
 Desktop.ini
@@ -112,3 +113,6 @@ jspm_packages
 # Yarn Integrity file
 .yarn-integrity
 yarn.yml
+
+
+# End of https://www.gitignore.io/api/windows,linux,macos,node

@@ -2,5 +2,5 @@
   "name": "vapi",
   "description": "A virtual api to browser.",
   "version": "0.0.0-alpha.2",
-  "license": "mit"
+  "license": "MIT"
 }
