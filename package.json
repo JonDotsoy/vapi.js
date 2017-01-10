@@ -1,7 +1,7 @@
 {
   "name": "vapi",
   "description": "A virtual api to browser.",
-  "version": "0.0.0-alpha.4",
+  "version": "0.0.0-alpha.5",
   "license": "MIT",
   "main": "lib/index.js",
   "directories": {
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/JonDotsoy/vapi.js#readme",
   "devDependencies": {
+    "chance": "^1.0.4",
     "expect.js": "^0.3.1",
     "mocha": "^3.2.0"
   },
