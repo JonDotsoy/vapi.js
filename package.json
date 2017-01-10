@@ -1,7 +1,7 @@
 {
   "name": "vapi",
   "description": "A virtual api to browser.",
-  "version": "0.0.0-alpha.6",
+  "version": "0.0.0-alpha.7",
   "license": "MIT",
   "main": "lib/index.js",
   "directories": {
