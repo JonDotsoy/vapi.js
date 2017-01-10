@@ -1,9 +1,9 @@
 {
   "name": "vapi",
   "description": "A virtual api to browser.",
-  "version": "0.0.0-alpha.3",
+  "version": "0.0.0-alpha.4",
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib/index.js",
   "directories": {
     "doc": "docs",
     "test": "test"
@@ -27,5 +27,8 @@
   "devDependencies": {
     "expect.js": "^0.3.1",
     "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
   }
 }
