@@ -1,6 +1,31 @@
 {
   "name": "vapi",
   "description": "A virtual api to browser.",
-  "version": "0.0.0-alpha.2",
-  "license": "MIT"
+  "version": "0.0.0-alpha.3",
+  "license": "MIT",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha -w",
+    "postpublish": "sh -c \"git tag v$npm_package_version\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonDotsoy/vapi.js.git"
+  },
+  "keywords": [
+    "models"
+  ],
+  "author": "Jonathan Delgado <hi@jon.soy>",
+  "bugs": {
+    "url": "https://github.com/JonDotsoy/vapi.js/issues"
+  },
+  "homepage": "https://github.com/JonDotsoy/vapi.js#readme",
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^3.2.0"
+  }
 }
