@@ -1,5 +1,5 @@
-# ![vapi.js](https://goo.gl/DH4cJW)
-A virtual api for the browser.
+# ![vapi](https://goo.gl/DH4cJW)
+A javascript library to make a powerful API.
 
 > ### Await a second!
 > Okay, this is my problem. Are there API generators in the backend but in the frontend?
@@ -10,7 +10,7 @@ A virtual api for the browser.
 
 ## Development goals
 
-1. Adapter to models
+1. [Adapter to models](docs/models.md)
 2. middlewares
 3. plugins?
 4. data sources
@@ -22,8 +22,17 @@ A virtual api for the browser.
     - Pipe update
     - Sync collection
 
+## Brand Vapi
+Vapi (Virtual API) is an open brand whereby this not have a restriction in you use. However it is suggested to use this with the following specifications.
+
+- Use the name:
+  - `Vapi` (The first letter uppercase)
+  - `vapi` (all letters on lowercase)
+
+
 
 ## License
 This project is under a [MIT License](./LICENSE).
 
 [@JonDotsoy]: https://github.com/JonDotsoy
+

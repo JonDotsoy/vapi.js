@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/JonDotsoy/vapi.js#readme",
   "devDependencies": {
+    "browserify": "^13.3.0",
     "chance": "^1.0.4",
     "expect.js": "^0.3.1",
     "mocha": "^3.2.0"
