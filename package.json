@@ -1,7 +1,8 @@
 {
   "name": "vapi",
-  "description": "A virtual api to browser.",
-  "version": "0.0.0-alpha.8",
+  "title": "Vapi",
+  "description": "A javascript library to make a powerful API.",
+  "version": "0.0.0-alpha.9",
   "license": "MIT",
   "main": "lib/index.js",
   "directories": {
@@ -9,6 +10,7 @@
     "test": "test"
   },
   "scripts": {
+    "build": "browserify browser.js -t envify -o dist/vapi.js",
     "test": "mocha -w",
     "postpublish": "sh -c \"git tag v$npm_package_version\""
   },
@@ -27,8 +29,10 @@
   "devDependencies": {
     "browserify": "^13.3.0",
     "chance": "^1.0.4",
+    "envify": "^4.0.0",
     "expect.js": "^0.3.1",
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "uglify-js": "^2.7.5"
   },
   "dependencies": {
     "lodash": "^4.17.4"
