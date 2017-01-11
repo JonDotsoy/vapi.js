@@ -116,3 +116,5 @@ yarn.yml
 
 
 # End of https://www.gitignore.io/api/windows,linux,macos,node
+
+dist
