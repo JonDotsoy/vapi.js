@@ -61,6 +61,57 @@ describe('VAPI.js Models', () => {
 
       })
 
+      // REF: https://runkit.com/jondotsoy/5876e5d164cddc0014666ebd
+      describe('Model.defineProperty(prototyName, description: {transferable})', () => {
+
+        it('Example 1: Define the "name" property how to transferable.', () => {
+
+          const name = chance.name()
+
+          class Person extends Model {}
+
+          Person.defineProperty('name', {
+            transferable: true,
+          })
+
+          const juan = new Person()
+
+          juan.name = name
+
+          const JUANParsed = JSON.parse(JSON.stringify(juan, null, 2))
+
+          expect(JUANParsed.name).to.be(name)
+        })
+
+        it('Example 2: define the "Account" property how to not transferable.', () => {
+
+          class Account extends Model {}
+          Account.defineProperties({
+            username: {
+              transform: require('lodash/toLower')
+            },
+            password: {
+              transferable: false
+            }
+          })
+
+          const CAT = new Account()
+
+          CAT.username = "Cat"
+          CAT.password = "12345"
+
+          const CATParsed = JSON.parse(JSON.stringify(CAT, null, 2))
+
+          expect(CATParsed.username).to.be('cat')
+          expect(CATParsed.username).to.not.be('Cat')
+
+          expect(CATParsed.password).to.be(undefined)
+          expect(CATParsed.password).to.not.be("12345")
+
+        })
+
+      })
+
     })
 
     it('Model.prototype.toString()', () => {
