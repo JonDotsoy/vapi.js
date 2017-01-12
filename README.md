@@ -11,24 +11,27 @@ A javascript library to make a powerful API.
 ## Development goals
 
 1. [Adapter to models](docs/models.md)
-2. middlewares
+    1. Validation by attributes
+    2. Validation with `isValid()`
+    2. Virtual attributes
+2. ~~middlewares~~
 3. plugins?
-4. data sources
+4. ~~data sources~~
 5. validations
-6. querys
+6. ~~querys~~
 7. ~~routing~~
-8. Allow Make a SKD
-9. Offline Mode
-    - Pipe update
-    - Sync collection
+8. ~~Allow Make a SKD~~
+9. ~~Offline Mode~~
+    - ~~Pipe update~~
+    - ~~Sync collection~~
 
 ## Brand Vapi
 Vapi (Virtual API) is an open brand whereby this not have a restriction in you use. However it is suggested to use this with the following specifications.
 
-- Use the name:
-  - `Vapi` (The first letter uppercase)
-  - `vapi` (all letters on lowercase)
-
+* Use the name Vapi:
+    * `Vapi`: The first letter uppercase.
+    * `vapi`: all letters on lowercase.
+    * `vapi.js`: Specific the javascript extension.
 
 
 ## License
