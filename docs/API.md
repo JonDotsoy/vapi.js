@@ -1,6 +1,3 @@
-# VAPI
-WHY?
-
 ## Class Model
 
 ### Model.defineProperty(propertyName, description)
@@ -13,14 +10,14 @@ class MyModel extends Model {}
 
 MyModel.defineProperty('name', {
   persistentValidation: true,
-  validation: require("lodash/isString"),
-  transform: require("lodash/toNumber")
+  validation: require('lodash/isString'),
+  transform: require('lodash/toString')
 })
 
 const myModel = new MyModel()
-myModel.name = "132"
+myModel.name = 'Juan Morales'
 
-console.log(myModel.valueOf()) // { name: 132 }
+console.log(myModel.valueOf()) // { name: "Juan Morales" }
 ```
 
 **Arguments**
@@ -37,3 +34,30 @@ console.log(myModel.valueOf()) // { name: 132 }
 | **persistentValidation** | `Boolean`  | Define if this property is a persistent validation.                    |
 | **validation**           | `Function` | This is a function to validate the set value.                          |
 | **transform**            | `Function` | This is a function to transform the value previously to set the value. |
+
+
+### Model.defineProperties(properties)
+Define many properties to the model.
+
+**Example**
+
+```javascript
+class MyModel extends Model {}
+
+MyModel.defineProperties({
+  'name': {
+    validation: require('lodash/isString')
+  },
+  'age': {
+    transform: require('lodash/toNumber')
+  }
+})
+
+const myModel = new MyModel()
+myModel.name = 'Diago Marcri'
+myModel.age = '32'
+
+console.log(myModel.valueOf()) // { name: "Diago Marcri", age: 32 }
+```
+
+> See example on runkit https://runkit.com/jondotsoy/5876dae264cddc0014666c70
