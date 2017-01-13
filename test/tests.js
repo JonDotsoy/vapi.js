@@ -115,7 +115,7 @@ describe('VAPI Models', () => {
 
       })
 
-      describe('Heredate definitions',  () => {
+      it('Heritable properties',  () => {
         const hashs = range(4).map(bind(chance.hash, chance, void(0)))
 
         class Person extends Model {}
