@@ -1,5 +1,8 @@
 const isString = require('lodash/isString')
 const isNumber = require('lodash/isNumber')
+const range = require('lodash/range')
+const wrap = require('lodash/wrap')
+const bind = require('lodash/bind')
 const expect = require('expect.js')
 const chance = new (require('chance'))
 const {Model} = require('..')
@@ -110,6 +113,48 @@ describe('VAPI.js Models', () => {
 
         })
 
+      })
+
+      describe('Heredate definitions',  () => {
+        const hashs = range(4).map(bind(chance.hash, chance, void(0)))
+
+        class Person extends Model {}
+        Person.defineProperties({
+          fullname: {default:hashs[0]},
+          age: {default:hashs[1]}
+        })
+
+        class Account extends Person {}
+        Account.defineProperties({
+          username: {default:hashs[2]},
+          password: {
+            transferable: false,
+            default:hashs[3]
+          }
+        })
+
+        const instancePerson = new Person
+        const instanceAccount = new Account
+
+        expect(instancePerson.fullname).to.be(hashs[0])
+        expect(instancePerson.age).to.be(hashs[1])
+
+        expect(instanceAccount.fullname).to.be(hashs[0])
+        expect(instanceAccount.age).to.be(hashs[1])
+        expect(instanceAccount.username).to.be(hashs[2])
+        expect(instanceAccount.password).to.be(hashs[3])
+
+        // Transferables
+        const transferInstancePerson = JSON.parse(JSON.stringify(instancePerson))
+        const transferInstanceAccount = JSON.parse(JSON.stringify(instanceAccount))
+
+        expect(transferInstancePerson.fullname).to.be(hashs[0])
+        expect(transferInstancePerson.age).to.be(hashs[1])
+
+        expect(transferInstanceAccount.fullname).to.be(hashs[0])
+        expect(transferInstanceAccount.age).to.be(hashs[1])
+        expect(transferInstanceAccount.username).to.be(hashs[2])
+        expect(transferInstanceAccount.password).to.be(undefined)
       })
 
     })
