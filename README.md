@@ -1,5 +1,5 @@
 # ![vapi](https://goo.gl/DH4cJW)
-A javascript library to make a powerful API.
+A javascript library that helps you create models in your applications.
 
 > ### Await a second!
 > Okay, this is my problem. Are there API generators in the backend but in the frontend?
