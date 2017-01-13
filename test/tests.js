@@ -9,7 +9,7 @@ const {Model} = require('..')
 
 const log = console.log.bind(console)
 
-describe('VAPI.js Models', () => {
+describe('VAPI Models', () => {
 
   describe('Model', () => {
 
