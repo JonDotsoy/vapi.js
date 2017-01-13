@@ -12,6 +12,9 @@
   },
   "scripts": {
     "build": "browserify browser.js -t envify -o dist/vapi.js",
+    "pretest-browser": "mocha init test-browser",
+    "test-browser": "browserify test/tests.js -t envify -o test-browser/tests.js",
+    "posttest-browser": "echo Open test-browser/index.html",
     "test": "mocha -w",
     "prepublish": "npm run build",
     "postpublish": "sh -c \"git tag v$npm_package_version\""
