@@ -7,11 +7,78 @@ const expect = require('expect.js')
 const chance = new (require('chance'))
 const {Model} = require('..')
 
+global.Model = Model
+
 const log = console.log.bind(console)
 
 describe('VAPI Models', () => {
 
   describe('Model', () => {
+
+    describe('Parse models', () => {
+
+      it('Parse with validators', () => {
+        const name = chance.first()
+        const age = chance.age()
+
+        const myData = {
+          name,
+          age,
+        }
+
+        class Person extends Model {}
+        Person.defineProperty('name', {
+          transform: (e)=>(""),// Allways return a empty string
+        })
+
+        const person1 = new Person(myData)
+
+        expect(person1.name).to.be('')
+        expect(person1.age).to.be(age)
+      })
+
+      const nameTOWithParseStaticFunction = chance.first()
+      const ageTOWithParseStaticFunction = chance.age()
+      it('with Parse static function', () => {
+        const name = nameTOWithParseStaticFunction
+        const age = ageTOWithParseStaticFunction
+
+        const myData = {
+          name,
+          age,
+        }
+
+        class Person extends Model {}
+
+        const person1 = Person.parse(myData)
+
+        expect(person1.name).to.be(name)
+        expect(person1.age).to.be(age)
+      })
+
+      const nameTOSingleParse = chance.first()
+      const ageTOSingleParse = chance.age()
+      it('Single Parse', () => {
+        const name = nameTOSingleParse
+        const age = ageTOSingleParse
+
+        const myData = {
+          name,
+          age,
+        }
+
+        class Person extends Model {}
+        const person1 = new Person(myData)
+
+        expect(person1.name).to.be(name)
+        expect(person1.age).to.be(age)
+      })
+    })
+
+    it('instanceof to a Model', () => {
+      const instance = new Model()
+      expect(instance).to.be.a(Model)
+    })
 
     describe('Model.defineProperty()', () => {
 
@@ -115,8 +182,9 @@ describe('VAPI Models', () => {
 
       })
 
+      const hashsTOHeritableProperties = range(4).map(bind(chance.hash, chance, void(0)))
       it('Heritable properties',  () => {
-        const hashs = range(4).map(bind(chance.hash, chance, void(0)))
+        const hashs = hashsTOHeritableProperties
 
         class Person extends Model {}
         Person.defineProperties({
@@ -231,14 +299,6 @@ describe('VAPI Models', () => {
         expect(instanceFail.isValid()).to.not.be.ok()
       })
     })
-
-  })
-
-  it('instanceof to a Model', () => {
-
-    const instance = new Model()
-
-    expect(instance).to.be.a(Model)
 
   })
 
