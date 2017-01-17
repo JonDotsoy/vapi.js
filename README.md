@@ -8,6 +8,17 @@ A javascript library that helps you create models in your applications.
 >
 > — [@JonDotsoy][]
 
+## Quick Start
+
+    $ npm install --save vapi
+
+```javascript
+// MyFile.js
+const {Model} = require('vapi')
+
+class MyModel extends Model {}
+```
+
 ## Development goals
 
 1. [Adapter to models](docs/models.md)
