@@ -1,34 +1,64 @@
+require('debug').enable('vapi:*')
+// const log = require('debug')('vapi:tests')
+
+/* global describe, it */
 const isString = require('lodash/isString')
 const isNumber = require('lodash/isNumber')
 const range = require('lodash/range')
-const wrap = require('lodash/wrap')
+// const wrap = require('lodash/wrap')
 const bind = require('lodash/bind')
 const expect = require('expect.js')
-const chance = new (require('chance'))
+const chance = new (require('chance'))()
+// const {} = require('./data')
 const {Model} = require('..')
 
 global.Model = Model
 
-const log = console.log.bind(console)
-
-describe('VAPI Models', () => {
-
+describe('VAPI', () => {
   describe('Model', () => {
+    describe('Inspect a element from Model', () => {
+      it('usin model#toString()', () => {
+        class MyModel extends Model {}
+        const myModel = new MyModel()
 
-    describe('Parse models', () => {
+        expect(myModel.toString()).to.be('[model MyModel]')
+      })
+      it('usin model#toString(), and custom name.', () => {
+        class MyModel extends Model {}
+        const myModel = new MyModel()
+        myModel[Symbol.toStringTag] = 'modelCool'
 
+        expect(myModel.toString()).to.be('[model modelCool]')
+      })
+
+      it('Usin instanceof', () => {
+        class A extends Model {}
+        class B extends Model {}
+        class C extends (class _C extends (class __C extends Model {}) {}) {}
+
+        const a = new A()
+        const b = new B()
+        const c = new C()
+
+        expect(a).to.be.a(Model)
+        expect(b).to.be.a(Model)
+        expect(c).to.be.a(Model)
+      })
+    })
+
+    describe('Parse a model', () => {
       it('Parse with validators', () => {
         const name = chance.first()
         const age = chance.age()
 
         const myData = {
           name,
-          age,
+          age
         }
 
         class Person extends Model {}
         Person.defineProperty('name', {
-          transform: (e)=>(""),// Allways return a empty string
+          transform: (e) => ('') // Allways return a empty string
         })
 
         const person1 = new Person(myData)
@@ -45,7 +75,7 @@ describe('VAPI Models', () => {
 
         const myData = {
           name,
-          age,
+          age
         }
 
         class Person extends Model {}
@@ -64,7 +94,7 @@ describe('VAPI Models', () => {
 
         const myData = {
           name,
-          age,
+          age
         }
 
         class Person extends Model {}
@@ -75,13 +105,7 @@ describe('VAPI Models', () => {
       })
     })
 
-    it('instanceof to a Model', () => {
-      const instance = new Model()
-      expect(instance).to.be.a(Model)
-    })
-
     describe('Model.defineProperty()', () => {
-
       it('Model.defineProperty(prototyName, description: {transform})', () => {
         class MyModel1 extends Model {}
         MyModel1.defineProperty('name', {
@@ -89,7 +113,7 @@ describe('VAPI Models', () => {
         })
 
         const myModel1 = new MyModel1()
-        myModel1.name = "153"
+        myModel1.name = '153'
 
         expect(myModel1.name).to.be(153)
         expect(myModel1.name).to.be.a('number')
@@ -102,7 +126,7 @@ describe('VAPI Models', () => {
         const myModel2 = new MyModel2()
         myModel2.name = 1242
 
-        expect(myModel2.name).to.be("1242")
+        expect(myModel2.name).to.be('1242')
         expect(myModel2.name).to.be.an('string')
       })
 
@@ -112,7 +136,7 @@ describe('VAPI Models', () => {
         MyModel.defineProperty('name', {
           persistentValidation: true,
           validation: (e) => {
-            return typeof(e) === 'string'
+            return typeof (e) === 'string'
           }
         })
 
@@ -123,25 +147,22 @@ describe('VAPI Models', () => {
         })
         .to.throwError()
 
-        expect(() => {myModel.name = Number(13)})
-        .to.throwException((e)=>{
+        expect(() => { myModel.name = Number(13) })
+        .to.throwException((e) => {
           expect(e).to.be.an(TypeError)
           expect(e).to.not.be.an(class NoAllowError extends Error {})
         })
-
       })
 
       // REF: https://runkit.com/jondotsoy/5876e5d164cddc0014666ebd
       describe('Model.defineProperty(prototyName, description: {transferable})', () => {
-
         it('Example 1: Define the "name" property how to transferable.', () => {
-
           const name = chance.name()
 
           class Person extends Model {}
 
           Person.defineProperty('name', {
-            transferable: true,
+            transferable: true
           })
 
           const juan = new Person()
@@ -154,7 +175,6 @@ describe('VAPI Models', () => {
         })
 
         it('Example 2: define the "Account" property how to not transferable.', () => {
-
           class Account extends Model {}
           Account.defineProperties({
             username: {
@@ -167,8 +187,8 @@ describe('VAPI Models', () => {
 
           const CAT = new Account()
 
-          CAT.username = "Cat"
-          CAT.password = "12345"
+          CAT.username = 'Cat'
+          CAT.password = '12345'
 
           const CATParsed = JSON.parse(JSON.stringify(CAT, null, 2))
 
@@ -176,33 +196,31 @@ describe('VAPI Models', () => {
           expect(CATParsed.username).to.not.be('Cat')
 
           expect(CATParsed.password).to.be(undefined)
-          expect(CATParsed.password).to.not.be("12345")
-
+          expect(CATParsed.password).to.not.be('12345')
         })
-
       })
 
-      const hashsTOHeritableProperties = range(4).map(bind(chance.hash, chance, void(0)))
-      it('Heritable properties',  () => {
+      const hashsTOHeritableProperties = range(4).map(bind(chance.hash, chance, void (0)))
+      it('Heritable properties', () => {
         const hashs = hashsTOHeritableProperties
 
         class Person extends Model {}
         Person.defineProperties({
-          fullname: {default:hashs[0]},
-          age: {default:hashs[1]}
+          fullname: {default: hashs[0]},
+          age: {default: hashs[1]}
         })
 
         class Account extends Person {}
         Account.defineProperties({
-          username: {default:hashs[2]},
+          username: {default: hashs[2]},
           password: {
             transferable: false,
-            default:hashs[3]
+            default: hashs[3]
           }
         })
 
-        const instancePerson = new Person
-        const instanceAccount = new Account
+        const instancePerson = new Person()
+        const instanceAccount = new Account()
 
         expect(instancePerson.fullname).to.be(hashs[0])
         expect(instancePerson.age).to.be(hashs[1])
@@ -224,14 +242,6 @@ describe('VAPI Models', () => {
         expect(transferInstanceAccount.username).to.be(hashs[2])
         expect(transferInstanceAccount.password).to.be(undefined)
       })
-
-    })
-
-    it('Model.prototype.toString()', () => {
-      const R = chance.first()
-      const E = {[R]: class extends Model {}}
-
-      expect((new (E[R])).toString()).to.be(`[object ${R}]`)
     })
 
     describe('Model.prototype.isValid()', () => {
@@ -247,7 +257,7 @@ describe('VAPI Models', () => {
         instance.name = 53
         expect(instance.isValid()).to.not.be.ok()
 
-        instance.name = "hola"
+        instance.name = 'hola'
         expect(instance.isValid()).to.be.ok()
       })
 
@@ -268,7 +278,7 @@ describe('VAPI Models', () => {
 
         const instanceGood = new MyModel()
 
-        instanceGood.name = "hola"
+        instanceGood.name = 'hola'
         instanceGood.age = 54
         instanceGood.isThree = 13
 
@@ -291,16 +301,35 @@ describe('VAPI Models', () => {
         })
 
         const instanceFail = new MyModel()
-        
+
         instanceFail.name = 142
-        instanceFail.age = "15"
+        instanceFail.age = '15'
         instanceFail.isThree = 15
 
         expect(instanceFail.isValid()).to.not.be.ok()
       })
     })
 
-  })
+    describe('Model alias values', () => {
+      it('Simple alias', () => {
+        class Person extends Model {}
+        Person.defineProperty('name', {
+          alias: 'firstName'
+        })
 
+        const jhon = new Person()
+
+        jhon.name = 'Jhon'
+
+        expect(jhon.name).to.be('Jhon')
+        expect(jhon.firstName).to.be('Jhon')
+
+        jhon.name = 'Carlos'
+
+        expect(jhon.name).to.be('Carlos')
+        expect(jhon.firstName).to.be('Carlos')
+      })
+    })
+  })
 })
 

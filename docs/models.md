@@ -30,3 +30,23 @@ Person.defineProperties({
 ```
 
 
+## Alias Properties
+Alias name to the model, permit read and write under another parameter in an instance.
+
+### Example
+```javascript
+class Person extends Model {}
+Person.defineProperty('name', {
+    alias: 'firstName'
+})
+
+const jhon = new Person()
+
+jhon.firstName = 'Jhon'
+// jhon => { 'firstName': 'Jhon', 'name': 'Jhon' } 
+
+jhon.firstName = 'Carlos'
+// jhon => { 'firstName': 'Carlos', 'name': 'Carlos' } 
+```
+
+
