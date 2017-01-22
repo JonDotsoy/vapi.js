@@ -401,12 +401,12 @@ describe('VAPI', () => {
     })
 
     describe('Model under Model', () => {
-      it('', () => {
+      it('validate child model', () => {
         class Person extends Model {}
         class User extends Model {}
 
         User.defineProperty('password', {
-          validation: (v) => (/^[a-z|0-9|\.]+$/i).test(v)
+          validation: (v) => (/^[a-z|0-9|.]+$/i).test(v)
         })
 
         Person.defineProperty('user', {})
@@ -433,19 +433,28 @@ describe('VAPI', () => {
         // Other update property
 
         Person.defineProperty('user', {
-          persistentValidation: true,
+          persistentValidation: true
         })
 
         const jhon = new Person()
 
         expect(() => {
-          jhon.user = new User({password: "1-3.56789"})
+          jhon.user = new User({password: '1-3.56789'})
         }).to.throwException()
 
         expect(() => {
-          jhon.user = new User({password: "123356789"})
+          jhon.user = new User({password: '123356789'})
         }).to.not.throwException()
+      })
 
+      it('block properties', () => {
+        class Person extends Model {}
+
+        Person.defineProperty('user', {}, true)
+
+        expect(() => {
+          Person.defineProperty('user', {default: 'hola'})
+        }).to.throwException()
       })
     })
   })
