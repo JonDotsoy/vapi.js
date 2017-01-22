@@ -33,7 +33,8 @@ Person.defineProperties({
 ## Alias Properties
 Alias name to the model, permit read and write under another parameter in an instance.
 
-### Example
+**Example:**
+
 ```javascript
 class Person extends Model {}
 Person.defineProperty('name', {
@@ -50,3 +51,47 @@ jhon.firstName = 'Carlos'
 ```
 
 
+## Validations
+The models can use validators this is useful when needing specific values. 
+
+**Example:**
+
+```javascript
+class Account extends Model {}
+Account.defineProperty('password', {
+    validation: [require('lodash/isString'), (v) => /^[a-z|0-9]{6,12}$/.test(v)],
+})
+
+const cat = new Account()
+cat.password = '1234'
+
+cat.isValid() // false
+
+cat.password = '1b3d5678910'
+cat.isValid() // true
+```
+
+## Transform
+Modify the value before set the final value.
+
+**Example:**
+
+```javascript
+function toCode (value) {
+    if (isObject(value)) {
+        return value
+    } else {
+        return {code: value, v: value[0]}
+    }
+}
+
+class PromoCard extends Model {}
+PromoCard.defineProperty('code', {
+    transform: toCode
+})
+
+const card1 = new PromoCard()
+
+card1.code = "abc1234"
+// card1 => {'code': {'code': 'bc1234', 'v': 'a'}}
+```

@@ -7,7 +7,11 @@ A javascript library that helps you create models in your applications.
 
 ## Quick Start
 
+Using npm:
+
     $ npm install --save vapi
+
+In Node.js:
 
 ```javascript
 // /app/models/MyModel.js
@@ -15,6 +19,10 @@ const {Model} = require('vapi')
 
 class MyModel extends Model {}
 ```
+
+## Documentation
+- [Models](./docs/Models.md)
+- [API](./docs/API.md)
 
 
 ## Brand Vapi
