@@ -26,7 +26,7 @@ class MyModel extends Model {}
 
 
 ## Brand Vapi
-Vapi (Virtual API) is an open brand whereby this not have a restriction in you use. However it is suggested to use this with the following specifications.
+Vapi ~~(Virtual API)~~ is an open brand whereby this not have a restriction in you use. However it is suggested to use this with the following specifications.
 
 * Use the name Vapi:
     * `Vapi`: The first letter uppercase.
