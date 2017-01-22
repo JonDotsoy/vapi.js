@@ -1,6 +1,6 @@
-## Class Model
+## Class `Model`
 
-### Model.defineProperty(propertyName, description)
+### `Model.defineProperty(propertyName, description)`
 Define an property to the model.
 
 **Example**
@@ -36,7 +36,7 @@ console.log(myModel) // { name: "Juan Morales" }
 | **transform**            | `Function` | This is a function to transform the value previously to set the value. |
 
 
-### Model.defineProperties(properties)
+### `Model.defineProperties(properties)`
 Define many properties to the model.
 
 **Example**
