@@ -1,5 +1,6 @@
 # ![vapi](https://goo.gl/hhHdbU)
 [![Package Quality](http://npm.packagequality.com/shield/vapi.svg)](http://packagequality.com/#?package=vapi)
+[![npm](https://img.shields.io/npm/v/vapi.svg)](https://github.com/JonDotsoy/vapi)
 
 A javascript library that helps you create models in your applications.
 
