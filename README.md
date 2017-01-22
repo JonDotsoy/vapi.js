@@ -16,14 +16,60 @@ In Node.js:
 ```javascript
 // /app/models/MyModel.js
 const {Model} = require('vapi')
-
-class MyModel extends Model {}
 ```
 
 ## Documentation
 - [Models](./docs/Models.md)
 - [API](./docs/API.md)
 
+## Quick Examples
+```javascript
+class Person extends Model {}
+// Define properties to Person model.
+Person.defineProperty('first', { alias: 'name' })
+Person.defineProperty('name', {
+    transform: require('lodash/toLower')
+})
+
+class User extends Model {}
+// Define properties to User model.
+User.defineProperties({
+    'username': {
+        transform: require('lodash/toLower')
+    },
+    'password': {
+        validation: (v) => /^[a-z|0-9]{9,15}$/.test(v)
+    },
+    'person': {}
+})
+
+// Create an instance of the User model.
+const cat = new User({
+    username: 'UserA',
+    password: '1234', // Bad Password
+    person: new Person({
+        name: 'Julio'
+    })
+})
+
+// Validation
+if (cat.isValid()) {
+    // you code if is valid.
+} else {
+    // you code of is not valid.
+}
+
+// End Cat state
+// cat => 
+// {
+//   "username": "usera",
+//   "password": "1234",
+//   "person": {
+//     "first": "julio",
+//     "name": "julio"
+//   }
+// }
+```
 
 ## Brand Vapi
 Vapi ~~(Virtual API)~~ is an open brand whereby this not have a restriction in you use. However it is suggested to use this with the following specifications.
