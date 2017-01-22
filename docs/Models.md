@@ -71,7 +71,7 @@ cat.password = '1b3d5678910'
 cat.isValid() // true
 ```
 
-## Transform
+## Transforms
 Modify the value before set the final value.
 
 **Example:**
