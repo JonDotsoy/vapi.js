@@ -17,7 +17,7 @@ MyModel.defineProperty('name', {
 const myModel = new MyModel()
 myModel.name = 'Juan Morales'
 
-console.log(myModel) // { name: "Juan Morales" }
+// myModel => { name: "Juan Morales" }
 ```
 
 **Arguments**
@@ -57,7 +57,7 @@ const myModel = new MyModel()
 myModel.name = 'Diago Marcri'
 myModel.age = '32'
 
-console.log(myModel) // { name: "Diago Marcri", age: 32 }
+// myModel => { name: "Diago Marcri", age: 32 }
 ```
 
 > See example on runkit https://runkit.com/jondotsoy/5876dae264cddc0014666c70
