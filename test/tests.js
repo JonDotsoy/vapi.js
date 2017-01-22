@@ -399,6 +399,55 @@ describe('VAPI', () => {
         expect(jhon.firstName).to.be('Carlos')
       })
     })
+
+    describe('Model under Model', () => {
+      it('', () => {
+        class Person extends Model {}
+        class User extends Model {}
+
+        User.defineProperty('password', {
+          validation: (v) => (/^[a-z|0-9|\.]+$/i).test(v)
+        })
+
+        Person.defineProperty('user', {})
+
+        Person.defineProperty('name', {
+          validation: (v) => (/^[a-z]+$/).test(v)
+        })
+
+        const jasmin = new Person()
+        jasmin.user = new User()
+
+        jasmin.name = 'abc'
+        jasmin.user.password = 'abcdefg1-.234.5'
+
+        expect(jasmin.user.isValid()).to.not.be.ok()
+        expect(jasmin.isValid()).to.not.be.ok()
+
+        jasmin.name = 'corret'
+        jasmin.user.password = 'abcdefg1.234.5'
+
+        expect(jasmin.user.isValid()).to.be.ok()
+        expect(jasmin.isValid()).to.be.ok()
+
+        // Other update property
+
+        Person.defineProperty('user', {
+          persistentValidation: true,
+        })
+
+        const jhon = new Person()
+
+        expect(() => {
+          jhon.user = new User({password: "1-3.56789"})
+        }).to.throwException()
+
+        expect(() => {
+          jhon.user = new User({password: "123356789"})
+        }).to.not.throwException()
+
+      })
+    })
   })
 })
 
