@@ -1,4 +1,6 @@
-# ![vapi](https://goo.gl/DH4cJW)
+# ![vapi](https://goo.gl/hhHdbU)
+[![Package Quality](http://npm.packagequality.com/shield/vapi.svg)](http://packagequality.com/#?package=vapi)
+
 A javascript library that helps you create models in your applications.
 
 > ### Await a second!
@@ -13,7 +15,7 @@ A javascript library that helps you create models in your applications.
     $ npm install --save vapi
 
 ```javascript
-// MyFile.js
+// /app/models/MyModel.js
 const {Model} = require('vapi')
 
 class MyModel extends Model {}
