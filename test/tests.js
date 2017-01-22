@@ -10,7 +10,7 @@ const bind = require('lodash/bind')
 const expect = require('expect.js')
 const chance = new (require('chance'))()
 // const {} = require('./data')
-const {Model} = require('..')
+const {Model, utils} = require('..')
 
 global.Model = Model
 
@@ -333,3 +333,53 @@ describe('VAPI', () => {
   })
 })
 
+describe('utils functions', () => {
+  it('#getPrototypesOf', () => {
+    class A {}
+    class B extends A {}
+    class C extends B {}
+    class D extends C {}
+    class E extends D {}
+    class F extends E {}
+    class G extends F {}
+    class I extends G {}
+
+    const _chain = utils.getPrototypesOf(new I(), A.prototype)
+    const chain = [..._chain]
+    chain.first = chain[0]
+    chain.last = chain[chain.length - 1]
+
+    // log('Inspect chain of prototypes => %o', chain)
+
+    expect(chain[0].constructor).to.be(I)
+    expect(chain[1].constructor).to.be(G)
+    expect(chain[2].constructor).to.be(F)
+    expect(chain[3].constructor).to.be(E)
+    expect(chain[4].constructor).to.be(D)
+    expect(chain[5].constructor).to.be(C)
+    expect(chain[6].constructor).to.be(B)
+    expect(chain[7].constructor).to.be(A)
+  })
+
+  it('#getDescriptionOf', () => {
+    class MyModelSub2 extends Model {}
+    class MyModelSub1 extends MyModelSub2 {}
+    class MyModel extends MyModelSub1 {}
+
+    MyModelSub2.defineProperty('c', {default: 'good c'})
+    MyModelSub2.defineProperty('b', {default: 'bad b'})
+    MyModelSub2.defineProperty('a', {default: 'bad a'})
+
+    MyModelSub1.defineProperty('b', {default: 'good b'})
+    MyModelSub1.defineProperty('a', {default: 'bad a'})
+
+    MyModel.defineProperty('a', {default: 'good a'})
+
+    const myModel = new MyModel()
+    const description = utils.getDescriptionOf(myModel)
+
+    expect(description.a.default).to.be('good a')
+    expect(description.b.default).to.be('good b')
+    expect(description.c.default).to.be('good c')
+  })
+})
