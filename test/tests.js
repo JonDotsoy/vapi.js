@@ -130,6 +130,75 @@ describe('VAPI', () => {
         expect(myModel2.name).to.be.an('string')
       })
 
+      it('Model.defineProperty(propName, description: {transform:[]})', () => {
+        class Person extends Model {}
+        Person.defineProperty('name', {
+          transform: [
+            require('lodash/toString'),
+            require('lodash/toLower'),
+            (val) => `[[${val}]]`
+          ]
+        })
+
+        const jasper = new Person()
+        jasper.name = 'JASPER'
+
+        expect(jasper.name).to.be('[[jasper]]')
+      })
+
+      it('Model.defineProperty(propName, description:{persistentValidation, validation: []})', () => {
+        function isLong (value) {
+          return value.length > 9
+        }
+
+        function isAlphanumeric (v) {
+          return /[0-9]/.test(v) && /[a-z]/i.test(v)
+        }
+
+        class Account extends Model {}
+        Account.defineProperty('password', {
+          validation: [isLong, isAlphanumeric]
+        })
+
+        Account.defineProperty('pass', {
+          alias: 'password'
+        })
+
+        const cat = new Account()
+
+        cat.password = '1'
+        expect(cat.isValid()).to.not.be.ok()
+
+        cat.password = 'asfas213asda1'
+        expect(cat.isValid()).to.be.ok()
+      })
+
+      it('Model.defineProperty(propName, description:{persistentValidation, validation: []})', () => {
+        function isLong (value) {
+          return value.length > 9
+        }
+
+        function isAlphanumeric (v) {
+          return /[0-9]/.test(v) && /[a-z]/i.test(v)
+        }
+
+        class Account extends Model {}
+        Account.defineProperty('password', {
+          persistentValidation: true,
+          validation: [isLong, isAlphanumeric]
+        })
+
+        Account.defineProperty('pass', {
+          alias: 'password'
+        })
+
+        const cat = new Account()
+
+        expect(() => { cat.password = '1' }).to.throwException()
+        expect(() => { cat.password = 'abcdefghijk' }).to.throwException()
+        expect(() => { cat.password = 'a1b3c4d5e6fghijk' }).to.not.throwException()
+      })
+
       it('Model.defineProperty(prototyName, description: {persistentValidation, validation})', () => {
         class MyModel extends Model {}
 
@@ -381,5 +450,46 @@ describe('utils functions', () => {
     expect(description.a.default).to.be('good a')
     expect(description.b.default).to.be('good b')
     expect(description.c.default).to.be('good c')
+  })
+
+  it('#validationValue', () => {
+    function isLong (v) {
+      return v.length >= 10
+    }
+
+    function isAlphanumeric (v) {
+      return /[0-9]/.test(v) && /[a-z]/i.test(v)
+    }
+
+    function noSymbols (v) {
+      return !/[^0-9|a-z]/i.test(v)
+    }
+
+    expect(utils.validationValue('1', isLong)).to.not.be.ok()
+    expect(utils.validationValue('1234567891', isLong)).to.be.ok()
+
+    expect(utils.validationValue('1234567891', isLong, isAlphanumeric)).to.not.be.ok()
+    expect(utils.validationValue('1234567891a', isLong, isAlphanumeric)).to.be.ok()
+    expect(utils.validationValue('1234a', isLong, isAlphanumeric)).to.not.be.ok()
+
+    expect(utils.validationValue('123456789%1', isLong, isAlphanumeric, noSymbols)).to.not.be.ok()
+    expect(utils.validationValue('1gg23456789a1', isLong, isAlphanumeric, noSymbols)).to.be.ok()
+
+    expect(utils.validationValue('12345cL6789%1', [isLong, isAlphanumeric], noSymbols)).to.not.be.ok()
+    expect(utils.validationValue('1gg2345b6789a1', isLong, [isAlphanumeric, noSymbols])).to.be.ok()
+    expect(utils.validationValue('1gg2345b6789a1', [isLong, isAlphanumeric, noSymbols])).to.be.ok()
+  })
+
+  it('#transformValue', () => {
+    function adding (ntoAdd) {
+      return function (v) {
+        return v + ntoAdd
+      }
+    }
+
+    expect(utils.transformValue(0, adding(6))).to.be(6)
+    expect(utils.transformValue(0, adding(6), adding(1))).to.be(7)
+    expect(utils.transformValue(0, [adding(4), adding(3), adding(1)])).to.be(8)
+    expect(utils.transformValue(0, adding(4), adding(3), [adding(1), adding(2)])).to.be(10)
   })
 })
