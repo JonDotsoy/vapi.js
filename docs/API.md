@@ -29,11 +29,14 @@ myModel.name = 'Juan Morales'
 
 ***description***
 
-| Name             | Type     | Description                                                                      |
-| ---------------- | -------- | -------------------------------------------------------------------------------- |
+| Name                     | Type       | Description                                                            |
+| ------------------------ | ---------- | ---------------------------------------------------------------------- |
 | **persistentValidation** | `Boolean`  | Define if this property is a persistent validation.                    |
 | **validation**           | `Function` | This is a function to validate the set value.                          |
 | **transform**            | `Function` | This is a function to transform the value previously to set the value. |
+| **alias**                | `Object`   | Define a reference to other value.                                     |
+| **default**              | `Object`   | Default value.                                                         |
+| **transferable**         | `Boolean`  | Define the property is view on end JSON.                               |
 
 
 ### `Model.defineProperties(properties)`
@@ -64,6 +67,29 @@ myModel.age = '32'
 
 **Arguments**
 
-| Name            | Type     | Description                    |
-| --------------- | -------- | ------------------------------ |
-| **properties**  | `Object` | An object with all properties. |
+| Name                      | Type     | Description                                    |
+| ------------------------- | -------- | ---------------------------------------------- |
+| **propertiesDescriptors** | `Object` | An object with multiple descriptions to model. |
+
+### `Model.parse(Object)`
+Is similar to `new Model(initialValues)`. Transform a simple object to a model type.
+
+```javascript
+class Person extends Model {}
+Person.defineProperty('name', {default: 'Jhon'})
+
+let person1 = {lastName: 'Fredyc'}
+// person1 => {"lastName": "Fredyc"}
+
+person1 = Person.parse(person1)
+// person1 => Person {"name": "Jhon","lastName": "Fredyc"}
+```
+
+> See example on runkit: https://runkit.com/jondotsoy/example-to-model-parse
+
+**Arguments**
+
+| Name       | Type     | Description          |
+| ---------- | -------- | -------------------- |
+| **Object** | `Object` | Object ot transform. |
+
