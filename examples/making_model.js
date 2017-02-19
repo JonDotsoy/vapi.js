@@ -2,8 +2,15 @@ const {Model} = require('..')
 
 class Person extends Model {}
 
+Person.defineProperty('firstName', {
+  transform: (name) => name.toString().toLowerCase()
+})
+
 Person.defineProperty('name', {
   alias: 'firstName'
 })
 
-console.log( (new Person({name:'Carlos'})).toJSON() )
+const nicol = new Person({name: 'Nicol'})
+
+console.log(JSON.stringify(nicol)) // => {"name":"Nicol","firstName":"Nicol"}
+
