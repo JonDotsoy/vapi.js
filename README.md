@@ -6,7 +6,7 @@ A javascript library that helps you create models in your applications.
 
 **Features:**
 
-- [x] Making a class model
+- [x] Making a class model *([Example](./examples/making_model.js))*
 - [x] Define Properties
 - [x] Data validation
 - [ ] Clone data
