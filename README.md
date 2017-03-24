@@ -1,4 +1,5 @@
 # ![vapi](https://goo.gl/hhHdbU)
+
 [![Package Quality](http://npm.packagequality.com/shield/vapi.svg)](http://packagequality.com/#?package=vapi)
 [![npm](https://img.shields.io/npm/v/vapi.svg)](https://github.com/JonDotsoy/vapi)
 
@@ -77,14 +78,6 @@ if (cat.isValid()) {
 //   }
 // }
 ```
-
-## Brand Vapi
-Vapi ~~(Virtual API)~~ is an open brand whereby this not have a restriction in you use. However it is suggested to use this with the following specifications.
-
-* Use the name Vapi:
-    * `Vapi`: The first letter uppercase.
-    * `vapi`: all letters on lowercase.
-    * `vapi.js`: Specific the javascript extension.
 
 
 ## License

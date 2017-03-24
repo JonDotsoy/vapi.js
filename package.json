@@ -1,5 +1,5 @@
 {
-  "name": "vapi",
+  "name": "@jondotsoy/vapi",
   "title": "Vapi",
   "description": "A javascript library that helps you create models in your applications.",
   "version": "0.1.0",
@@ -13,6 +13,9 @@
   "scripts": {
     "pretest": "standard",
     "test": "mocha",
+    "t": "mocha",
+    "testw": "mocha --watch",
+    "tw": "mocha --watch",
     "prebuild": "npm run test",
     "build": "browserify browser.js -t envify -t babelify -o dist/vapi.js",
     "postbuild": "uglifyjs dist/vapi.js --mangle -o dist/vapi.min.js",
