@@ -6,7 +6,7 @@
 A javascript library that helps you create models in your applications.
 
 
-## Goals to vapi.js 🐇
+## Goals to vapi 🐇
 
 
 
