@@ -8,7 +8,8 @@ A javascript library that helps you create models in your applications.
 
 ## Goals to vapi 🐇
 
-
+- [ ] Define a model.
+- [ ] 
 
 
 ## Quick Start

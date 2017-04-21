@@ -1,0 +1,6 @@
+import {Model} from 'vapi'
+
+export class Person extends Model {
+
+}
+
